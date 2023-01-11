@@ -1,34 +1,52 @@
+# PHP Micro Router
+This router is a super slim router that does not have any package requirements. It gives a very similar look and feel as the Laravel and Lumen routers but without all the unnecesary cruft.
 
+It supports the following:
+- get requests
+- post requests
+- put requests
+- delete requests
+- URL parameterization
 
-###Rewirite engine required
+## Rewirite engine required
+> In your production environment you will want apache or nginx to rewrite the urls for you so they look pretty.
+
+> When developing locally, you can skip this step
 
 Add the following to your .htaccess file
-```
+``` ini
 Options +FollowSymLinks
 RewriteEngine On
 RewriteRule ^(.*)$ index.php [NC,L]
 ```
 
-###Usage
-Require the router class in your index.php
+## Local development
+The following command will start a php server and point it to your `example.php` file.
+> All urls will be demoed in the following format `http://localhost:8000/api/example`
 ```
-require("class.router.php");
+php -S localhost:8000 example.php
+```
+
+## Usage
+Require the router class in your php file
+``` php
+require(__DIR__."/class.router.php");
 ```
 
 Create a new instance of the router
-```
+``` php
 $router = new Router();
 ```
 
 Add routes to the router
-```
-$router->get(array('api/example/all','some_function'));
-$router->post(array('api/example/value','some_function_2'));
-$router->put(array('api/example/mode','some_function_3'));
-$router->delete(array('api/example/delete','some_function_4'));
+``` php
+$router->get('/api/example','example_one');
+$router->get('/api/example/{id}','example_two');
 ```
 
 Start the router
+``` php
+$router->start();
 ```
-$router->execute();
-```
+
+## See the `example.php` file for additonal examples
